@@ -1,0 +1,15 @@
+# raw downloads (incl. diploma scans with personal data) and build tooling: never published
+_source/
+.taste-skill/
+shots/
+.DS_Store
+# taste-kit parts this page never loads
+assets/photos/
+assets/scenes/
+assets/objects/
+assets/effects/
+assets/components/
+assets/backgrounds/
+assets/diagrams/
+assets/layout/img/
+assets/icons/demo/

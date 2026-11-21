@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="bg" data-type="service" data-radius="soft" data-buttons="block" data-motion>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Елена Бургова: учител по история и цивилизации в Пловдив</title>
+<meta name="description" content="Портфолио на Елена Бургова, учител по история в СУ „Св. Паисий Хилендарски“: опит от 1997 г., методи, дигитални материали и постижения на учениците.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Елена Бургова: учител по история и цивилизации в Пловдив">
+<meta property="og:description" content="Опит от 1997 г., методи на преподаване, дигитални материали и постижения на учениците.">
+<meta property="og:image" content="share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#fcfaf8">
+<!-- <link rel="canonical" href="https://[домейнът на Елена]/"> -->
+<meta name="site-kind" content="other">
+<meta name="page-type" content="service">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..600&family=Nunito+Sans:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/system.css">
+<link rel="stylesheet" href="assets/ui/cards.css">
+<link rel="stylesheet" href="assets/motion/motion.css">
+<link rel="stylesheet" href="assets/layout/layout.css">
+<link rel="stylesheet" href="assets/icons/icon.css">
+<style>
+:root {
+  --p-bg: #fcfaf8; --p-surface: #f4f1f2; --p-ink: #1c1916; --p-muted: #736660;
+  --p-accent: #5b4f4b; --p-accent-ink: #fcfaf8; --p-action: #5b4f4b; --p-action-ink: #fcfaf8;
+  --p-inv-bg: #1c1916; --p-inv-surface: #292623; --p-inv-ink: #fcfaf8; --p-inv-muted: #9e9c99;
+  --p-inv-accent: #fcfaf8; --p-inv-accent-ink: #1c1916; --p-inv-action: #fcfaf8; --p-inv-action-ink: #1c1916;
+  --font-display: "Lora", Georgia, serif;
+  --font-text: "Nunito Sans", system-ui, sans-serif;
+  --display-weight: 400;
+  --display-tracking: -0.015em;
+  --display-tracking-xl: -0.02em;
+  --ly-scale: 1.02;
+}
+</style>
+<script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
+<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
+<link rel="modulepreload" href="assets/moments/moments.js">
+<link rel="modulepreload" href="assets/moments/lib.js">
+<link rel="modulepreload" href="assets/moments/word-highlight/moment.js">
+<link rel="modulepreload" href="assets/moments/pinned-chapters/moment.js">
+<!-- page CSS: Calenne's one italic accent in the h1, the hero film's pause button, the timeline from the CV site -->
+<style>
+  .hero h1 em { font-style: italic; color: #8a7868; }
+  /* full-width film header (brief: drdebtherapy.com): the film as the hero's layer across the top, a soft curved foot,
+     nothing on it; the one .wrap with the words sits under it */
+  section.hero.hero--film-wide { --film-h: calc(100svh - var(--nav) - 352px); padding: calc(var(--nav) + var(--film-h) + var(--s-6)) 0 var(--hpadb); }
+  main > section.hero--film-wide > video.hero-wide__film.layer { position: absolute; z-index: 0; inset: auto; left: 0; top: var(--nav); width: 100%; height: var(--film-h); object-fit: cover; object-position: 50% 40%;
+    background: var(--surface); clip-path: ellipse(115% 100% at 50% 0); }
+  section.hero--film-wide > .wrap { position: relative; }
+  section.hero--film-wide .film-pause { right: 0; top: calc(-1 * (var(--film-h) + var(--s-6)) + 24px); bottom: auto; }
+  section.hero--film-wide > .wrap { height: auto; }
+  section.hero--film-wide > .wrap > .hero-text { height: auto; min-height: 0; align-items: start; }
+  .hero-wide__text h1 { font-size: clamp(40px, 4.4vw, 64px); margin-top: var(--s-3); }
+  .hero-wide__side .btn-row { margin-top: var(--s-5); }
+  @media (max-width: 1023px) { section.hero.hero--film-wide { --film-h: calc(100svh - var(--nav) - 470px); } .hero-wide__side { grid-column: 1 / -1; } main > section.hero--film-wide > video.hero-wide__film.layer { clip-path: ellipse(130% 100% at 50% 0); } }
+  @media (max-width: 639px) { section.hero.hero--film-wide { --film-h: calc(100svh - var(--nav) - 440px); padding-top: calc(var(--nav) + var(--film-h) + var(--s-5)); } main > section.hero--film-wide > video.hero-wide__film.layer { clip-path: ellipse(150% 100% at 50% 0); } section.hero--film-wide .film-pause { top: calc(-1 * (var(--film-h) + var(--s-5)) + 16px); } .hero-wide__text h1 { font-size: 34px; } }
+  .film-pause { position: absolute; right: 12px; bottom: 12px; z-index: 2; width: 32px; height: 32px; border: 0; border-radius: 50%;
+    display: grid; place-items: center; background: var(--ink); color: var(--bg); cursor: pointer; transition: transform 160ms var(--ease), background-color 150ms var(--ease); }
+  .film-pause:active { transform: scale(.97); }
+  @media (hover: hover) and (pointer: fine) { .film-pause:hover { background: var(--p-accent); } }
+  .film-pause svg { width: 12px; height: 12px; }
+  .film-pause .i-play { display: none; } .film-pause[aria-pressed="true"] .i-play { display: block; } .film-pause[aria-pressed="true"] .i-pause { display: none; }
+  @media (prefers-reduced-motion: reduce) { .film-pause { display: none; } }
+
+  /* timeline (antonioburgov.github.io/portfolio, "The path so far"): the line draws and each year darkens as it is passed */
+  /* one rail on the page's columns: the year on the left line (cols 1-2), the line and dot in col 3, the card from col 4 */
+  .tl { position: relative; margin-top: var(--s-7); --col: calc((100% - 11 * 24px) / 12); }
+  .tl-line { position: absolute; left: calc(5 * var(--col) + 5 * 24px + var(--col) / 2); top: 8px; bottom: 8px; width: 1px; background: var(--line); transform: translateX(-50%); }
+  .tl-fill { position: absolute; inset: 0; background: var(--ink); transform-origin: 50% 0; }
+  .tl-item { position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start; }
+  .tl-item + .tl-item { margin-top: calc(var(--s-10) + var(--s-3)); }
+  .tl-year { grid-column: 1 / 6; font: var(--display-weight) 40px/1 var(--font-display); letter-spacing: -0.02em; color: var(--ink); transition: color 300ms var(--ease); }
+  .js-tl .tl-item:not(.passed) .tl-year { color: #8f8179; }
+  .tl-dot { grid-column: 6; justify-self: center; position: relative; z-index: 1; width: 14px; height: 14px; margin-top: 12px; border-radius: 50%; background: var(--ink); border: 2px solid var(--ink); transition: background-color 200ms var(--ease); }
+  .js-tl .tl-item:not(.passed) .tl-dot { background: var(--bg); }
+  .tl-card { grid-column: 7 / 13; }
+  .tl-when { font-size: var(--t-label); font-weight: 500; color: var(--ink); }
+  .tl-card h3 { margin-top: var(--s-1); font: 500 var(--t-card)/1.3 var(--font-text); }
+  .tl-card p { color: var(--ink); }
+  @media (min-width: 768px) and (max-width: 1279px) { .tl-item + .tl-item { margin-top: 72px; } }
+  @media (max-width: 767px) {
+    .tl-line { left: 7px; }
+    .tl-item { grid-template-columns: 14px minmax(0, 1fr); column-gap: var(--s-4); }
+    .tl-dot { grid-area: 1 / 1; margin-top: 6px; }
+    .tl-year { grid-area: 1 / 2; font-size: 28px; }
+    .tl-card { grid-area: 2 / 2; padding-top: 4px; }
+    .tl-item + .tl-item { margin-top: 72px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .js-tl .tl-item .tl-year { color: var(--ink); } .js-tl .tl-item .tl-dot { background: var(--ink); } }
+
+  @media (max-width: 639px) { #metodi { min-height: calc(2 * 100lvh); } }
+  .about__quote { margin-top: var(--s-5); font: italic 400 20px/1.5 var(--font-display); color: var(--ink); }
+  .about__quote cite { display: block; margin-top: var(--s-2); font: 400 var(--t-small)/1.4 var(--font-text); font-style: normal; color: var(--ink); }
+  .tools { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-5); }
+  .tools-more { margin-top: var(--s-4); color: var(--ink); max-width: 62ch; }
+  .more-links { display: flex; flex-wrap: wrap; gap: var(--s-6); margin-top: var(--s-6); }
+</style>
+</head>
+<body>
+<!-- type: service
+     deal: hero split (deal.mjs), rebuilt by the brief as a full-width film header (drdebtherapy.com), nav nav-mega, close close-type (re-dealt from close-photo: every photograph is used above),
+           footer footer-columns, rhythm dark-band, buttons block, mark arc; palette: the brief's own (Calenne template colours
+           through start.mjs brand), type lora (Lora + Nunito Sans: the template's serif heads, and both faces carry Cyrillic)
+     moments: word-highlight in #filosofiya (her teaching philosophy, read word by word);
+              pinned-chapters in #metodi (three methods, each beside a real lesson of hers)
+     brief-pinned: the hero film plays muted with a pause button; the timeline in #opit follows the CV site's scroll line -->
+<header class="nav">
+  <div class="wrap nav__bar">
+    <a class="skip-link" href="#top">Към съдържанието</a>
+    <a class="nav__logo" href="#top"><span class="mark" data-mark="arc" aria-hidden="true"></span>Елена Бургова</a>
+    <nav class="nav__links" aria-label="Основно меню">
+      <div class="nav__item"><a class="nav__link" href="#profil">Профил</a></div>
+      <div class="nav__item"><a class="nav__link" href="#opit">Опит</a></div>
+      <div class="nav__item">
+        <a class="nav__link" href="#metodi">Методи <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="nav__menu">
+          <div class="wrap grid">
+            <div class="menu-col span-3">
+              <p class="t-label">Методи</p>
+              <a href="#metodi">Проблемно-изследователски<span>Въпрос, извори, изводи</span></a>
+              <a href="#metodi">Интерактивен<span>Дискусии и ролеви игри</span></a>
+              <a href="#metodi">Проектно-базиран<span>Ученически проекти</span></a>
+            </div>
+            <div class="menu-col span-3">
+              <p class="t-label">Материали</p>
+              <a href="#materiali">Историческа карта<span>Седемте чудеса в Pictramap</span></a>
+              <a href="#materiali">Галерия за 24 май<span>Рисунки на ученици в Padlet</span></a>
+              <a href="#materiali">Работни листове<span>20 в Liveworksheets</span></a>
+            </div>
+            <a class="menu-card span-3 start-10" href="#metodi">
+              <div class="panel"><img width="640" height="360" class="frame__img" src="img/urok-rim-sm.jpg" alt="Елена Бургова и ученици на открит урок в Регионалния исторически музей в Пловдив" loading="lazy"></div>
+              <span class="t-card">Открит урок в РИМ</span>
+              <span class="t-small muted">Възрожденци и изкуствен интелект</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="nav__item"><a class="nav__link" href="#postizheniya">Постижения</a></div>
+      <div class="nav__item"><a class="nav__link" href="#kvalifikacii">Квалификации</a></div>
+    </nav>
+    <div class="nav__actions">
+      <a class="btn btn--primary" href="mailto:elena@burgova.example">Пишете на Елена</a>
+    </div>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Меню">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero hero--film-wide" data-enter aria-labelledby="hero-h">
+    <!-- stand-in film (Pexels 8342243): replace with a clip from Elena's own lessons -->
+    <video id="hero-film" class="layer hero-wide__film" data-enter-media muted loop playsinline preload="metadata" poster="img/klas-poster.jpg" aria-hidden="true" data-source="library" data-subject="classroom">
+      <source src="media/klas-720.mp4" type="video/mp4" media="(max-width: 767px)">
+      <source src="media/klas.mp4" type="video/mp4">
+    </video>
+    <div class="wrap">
+      <button class="film-pause" type="button" aria-pressed="false" aria-label="Пауза на видеото">
+        <svg class="i-pause" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 2h2v8H3zM7 2h2v8H7z" fill="currentColor"/></svg>
+        <svg class="i-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 2l7 4-7 4z" fill="currentColor"/></svg>
+      </button>
+      <div class="hero-text grid hero-wide__text">
+        <div class="span-5">
+          <p class="hero__kicker"><span class="dot" aria-hidden="true"></span>Пловдив · преподава от 1997 г.</p>
+          <h1 id="hero-h"><em>Елена Бургова,</em> учител по история</h1>
+        </div>
+        <div class="span-6 start-7 hero-wide__side">
+          <p class="hero__lead">Преподавам история и цивилизации в СУ „Св. Паисий Хилендарски“. Учениците ми работят с исторически извори, дигитални карти и собствени проекти.</p>
+          <div class="btn-row"><a class="btn btn--primary" href="mailto:elena@burgova.example">Пишете на Елена<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a><a class="btn btn--secondary" href="#opit">Вижте опита</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="profil" style="--hm: 2" aria-labelledby="profil-h">
+    <div class="wrap">
+      <div class="grid">
+        <div class="span-5">
+          <h2 id="profil-h">Учител в екип с колеги и родители</h2>
+          <p class="t-lead" style="margin-top: var(--s-5)">Организирам междупредметни уроци с колеги от други предмети и говоря редовно с родителите, когато ученето затруднява някого.</p>
+          <ul class="rows" style="margin-top: var(--s-6)">
+            <li><span class="rows__name">Базов учител на студенти по история</span><span class="rows__value">от 2017 г.</span></li>
+            <li><span class="rows__name">Областна комисия на олимпиадата по история</span></li>
+            <li><span class="rows__name">Лектор в работните срещи на РУО Пловдив</span></li>
+            <li><span class="rows__name">Ко-преподаване и уроци с изкуствен интелект</span></li>
+          </ul>
+          <blockquote class="about__quote">„Тръгне ли човек с чисти подбуди към нещо, винаги успява.“<cite>Невена Коканова, любим цитат на Елена</cite></blockquote>
+        </div>
+        <div class="frame frame--photo span-6 start-7" style="aspect-ratio: 1 / 1">
+          <img width="960" height="954" class="frame__img" src="img/elena.jpg" srcset="img/elena-640.jpg 640w, img/elena.jpg 960w" sizes="(max-width: 767px) 92vw, 50vw" alt="Елена Бургова" loading="lazy" data-source="client" data-subject="portrait" style="object-position: 50% 30%">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="opit" style="--h: 2" aria-labelledby="opit-h">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="opit-h">Опит и образование. <span class="muted">Четири училища в Пазарджик и Пловдив.</span></h2>
+      </div>
+      <div class="tl" id="tl">
+        <div class="tl-line" aria-hidden="true"><div class="tl-fill"></div></div>
+        <article class="tl-item"><div class="tl-year">1987</div><div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-card"><span class="tl-when">Училище · 1987 – 1992</span><h3>ЕГ „Бертолт Брехт“, Пазарджик</h3><p>Езикова гимназия с немски език</p></div></article>
+        <article class="tl-item"><div class="tl-year">1992</div><div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-card"><span class="tl-when">Образование · 1992 – 1997</span><h3>Магистър по история</h3><p>ВТУ „Св. Св. Кирил и Методий“, специализация „Древност и археология“</p></div></article>
+        <article class="tl-item"><div class="tl-year">1997</div><div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-card"><span class="tl-when">Работа · 1997 – 2003</span><h3>СОУ „Д-р Петър Берон“, Пазарджик</h3><p>Учител по история и цивилизации</p></div></article>
+        <article class="tl-item"><div class="tl-year">2006</div><div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-card"><span class="tl-when">Работа · 2006 – 2007</span><h3>ЕГ „Пловдив“</h3><p>Учител по история и цивилизации</p></div></article>
+        <article class="tl-item"><div class="tl-year">2007</div><div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-card"><span class="tl-when">Работа · 2007 – 2016</span><h3>СОУ „Симон Боливар“, Пловдив</h3><p>Учител по история и цивилизации</p></div></article>
+        <article class="tl-item"><div class="tl-year">2008</div><div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-card"><span class="tl-when">Квалификация · 2008 – 2009</span><h3>Учител по немски език</h3><p>СУ „Св. Климент Охридски“, Факултет по класически и нови филологии</p></div></article>
+        <article class="tl-item"><div class="tl-year">2016</div><div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-card"><span class="tl-when">Работа · 2016 – досега</span><h3>СУ „Св. Паисий Хилендарски“, Пловдив</h3><p>Учител по история и цивилизации</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="metodi" style="--h: 2; --hm: 2" data-moment="pinned-chapters" aria-labelledby="metodi-h">
+    <div class="wrap mo-pc__grid">
+      <div class="mo-pc__text">
+        <h2 id="metodi-h">Методи на преподаване</h2>
+        <ol class="mo-pc__steps">
+          <li class="mo-pc__step">
+            <h3>Проблемно-изследователски метод</h3>
+            <p>Учениците получават исторически въпрос и сами търсят причините и следствията. Пример: урокът „Чудесата на Древния свят“ по история и английски.</p>
+            <figure class="mo-pc__visual"><img loading="lazy" width="980" height="552" src="img/chudesata.jpg" srcset="img/chudesata-640.jpg 640w, img/chudesata.jpg 980w" sizes="(max-width: 767px) 92vw, 50vw" alt="Пирамидите в Гиза, корицата на урока „Чудесата на Древния свят“" data-source="client" data-subject="lesson"></figure>
+          </li>
+          <li class="mo-pc__step">
+            <h3>Интерактивен метод</h3>
+            <p>Дискусии, ролеви игри и работа в екип. На открития урок в РИМ – Пловдив учениците проведоха виртуално интервю с Панайот Волов.</p>
+            <figure class="mo-pc__visual"><img loading="lazy" width="1280" height="720" src="img/urok-rim.jpg" srcset="img/urok-rim-640.jpg 640w, img/urok-rim.jpg 1280w" sizes="(max-width: 767px) 92vw, 50vw" alt="Елена Бургова и ученици представят урок пред екран в Регионалния исторически музей" data-source="client" data-subject="lesson"></figure>
+          </li>
+          <li class="mo-pc__step">
+            <h3>Проектно-базирано обучение</h3>
+            <p>Учениците правят свои проекти и ги защитават пред класа. Така се събра дигиталната книжка „Животът и дейността на Кирил и Методий“.</p>
+            <figure class="mo-pc__visual"><img loading="lazy" width="1280" height="960" src="img/kniga-kim.jpg" srcset="img/kniga-kim-640.jpg 640w, img/kniga-kim.jpg 1280w" sizes="(max-width: 767px) 92vw, 50vw" alt="Ученическа рисунка на светите братя Кирил и Методий с букви от азбуката" data-source="client" data-subject="student work"></figure>
+          </li>
+        </ol>
+      </div>
+      <div class="mo-pc__visuals frame"></div>
+    </div>
+  </section>
+
+  <section class="section statement" id="filosofiya" data-moment="word-highlight" aria-label="Философия на преподаване">
+    <div class="wrap">
+      <p class="t-label">Философия на преподаване</p>
+      <p class="mo-wh__text">Историята е повече от факти и дати. Уча учениците да търсят <strong>причините</strong>, да четат изворите и да свързват миналото с днешния ден.</p>
+    </div>
+  </section>
+
+  <section class="section" id="materiali" style="--hm: 2" aria-labelledby="materiali-h">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="materiali-h">Дигитални материали за учениците</h2>
+        <p>Карти, галерии и работни листове, които учениците отварят в час и вкъщи.</p>
+      </div>
+      <div class="grid">
+        <a class="tile tile--wide span-4" href="https://www.pictramap.com/app/view?p=b61b69">
+          <div class="tile__media"><img width="900" height="560" src="img/karta.jpg" srcset="img/karta-640.jpg 640w, img/karta.jpg 900w" sizes="(max-width: 767px) 92vw, 50vw" alt="Дигитална карта с Ефес и Мавзолея в Халикарнас" loading="lazy" data-source="client" data-subject="digital map"></div>
+          <div class="tile__head"><h3>Карта на Седемте чудеса</h3></div>
+          <p>Историческа карта в Pictramap: всяко чудо на света стои на мястото си.</p>
+        </a>
+        <a class="tile tile--wide span-4" href="https://padlet.com/elenaburgova/24-krubpngkvprtpbch">
+          <div class="tile__media"><img width="900" height="676" src="img/galeria-24mai.jpg" srcset="img/galeria-24mai-640.jpg 640w, img/galeria-24mai.jpg 900w" sizes="(max-width: 767px) 92vw, 50vw" alt="Ученическа рисунка за 24 май с Кирил и Методий" loading="lazy" data-source="client" data-subject="student work"></div>
+          <div class="tile__head"><h3>Галерия за 24 май</h3></div>
+          <p>Рисунки и текстове на ученици за Кирил и Методий, събрани в Padlet.</p>
+        </a>
+        <a class="tile tile--wide span-4" href="https://www.liveworksheets.com/t/my-worksheets">
+          <div class="tile__media"><img width="1000" height="412" src="img/rabotni-listove.jpg" srcset="img/rabotni-listove-640.jpg 640w, img/rabotni-listove.jpg 1000w" sizes="(max-width: 767px) 92vw, 50vw" alt="Списък с работни листове по история в Liveworksheets" loading="lazy" data-source="client" data-subject="worksheets" style="object-position: 0 50%"></div>
+          <div class="tile__head"><h3>20 живи работни листа</h3></div>
+          <p>Работни листове в Liveworksheets, които проверяват отговорите веднага.</p>
+        </a>
+      </div>
+      <div class="more-links">
+        <a class="link" href="https://www.plovdiv-press.bg/2025/06/10/%D0%BF%D0%B0%D0%BD%D0%B0%D0%B9%D0%BE%D1%82-%D0%B2%D0%BE%D0%BB%D0%BE%D0%B2-%D1%81-%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D0%BD%D0%BE-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D1%8E-%D0%B7%D0%B0-%D1%83/474112/">Прочетете за урока в РИМ</a>
+        <a class="link" href="https://prepodavame.bg/pateshestvie-do-chudesata-na-drevnia-svyat-interdistsiplinaren-urok-po-istoria-i-angliyski-ezik/">Прочетете урока за Древния свят</a>
+        <a class="link" href="https://read.bookcreator.com/6OwsW27iFPTdpNawIrGprv032Qu2/kQsTPtBHSq620bjG18HhuQ/01BVECiyQUKX4UWopQ6dhQ-right">Отворете книжката за Кирил и Методий</a>
+        <a class="link" href="https://youtu.be/GqnI_L6MCYs">Гледайте видеоклипа</a>
+        <a class="link" href="https://padlet.com/eliburgowa/padlet-su1ngj0ca94emxj5">Вижте „Музей на социализма“</a>
+        <a class="link" href="https://www.teacherwef.bg/%d0%b4%d0%b5%d0%bb%d0%be%d1%82%d0%be-%d0%bd%d0%b0-%d1%81%d0%b2%d0%b5%d1%82%d0%b8%d1%82%d0%b5-%d0%b1%d1%80%d0%b0%d1%82%d1%8f-%d0%bd%d0%b0%d1%87%d0%b0%d0%bb%d0%be-%d0%bd%d0%b0-%d1%81%d1%82%d0%b0%d1%80/">Прочетете споделените уроци</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section ground-inverse" id="postizheniya" style="--hm: 2" aria-labelledby="postizheniya-h">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="postizheniya-h">Постижения и награди. <span class="muted">Ученици на Елена на олимпиадата по история.</span></h2>
+      </div>
+      <div class="grid grid--top fill" data-peek>
+        <ul class="rows span-5">
+          <li data-peek-to="kaloyan" tabindex="0"><span class="rows__name">Калоян Димов</span><p>Четвърти в страната, национален кръг</p><span class="rows__value">2023</span></li>
+          <li data-peek-to="teodor" tabindex="0"><span class="rows__name">Теодор Чаушев</span><p>Трето място, областен кръг</p><span class="rows__value">2025</span></li>
+          <li data-peek-to="klasove" tabindex="0"><span class="rows__name">Ученици от 5., 6. и 7. клас</span><p>Първо, второ и трето място, областен кръг</p><span class="rows__value">2024</span></li>
+          <li data-peek-to="viktorina" tabindex="0"><span class="rows__name">Отбор на училището</span><p>Първо място във викторина за Освобождението на Пловдив</p></li>
+          <li data-peek-to="gramota" tabindex="0"><span class="rows__name">Грамота за Елена</span><p>Район „Централен“, за високи постижения в работата</p><span class="rows__value">2023/24</span></li>
+        </ul>
+        <div class="frame frame--photo frame--fill span-6 start-7">
+          <img loading="lazy" width="1000" height="1334" class="frame__img" data-peek-for="kaloyan" src="img/kaloyan.jpg" alt="Калоян Димов с грамота пред читалище" data-source="client" data-subject="student" style="object-position: 50% 8%">
+          <img width="1000" height="1410" class="frame__img" data-peek-for="teodor" src="img/teodor.jpg" alt="Теодор Чаушев" data-source="client" data-subject="student" hidden style="object-position: 50% 12%">
+          <img width="1000" height="1328" class="frame__img" data-peek-for="klasove" src="img/olimpiada-2024.jpg" srcset="img/olimpiada-2024-640.jpg 640w, img/olimpiada-2024.jpg 1000w" sizes="(max-width: 767px) 92vw, 50vw" alt="Ученици от 5., 6. и 7. клас пред стенопис" data-source="client" data-subject="students" hidden style="object-position: 50% 30%">
+          <img width="1000" height="1334" class="frame__img" data-peek-for="viktorina" src="img/gramota-viktorina.jpg" srcset="img/gramota-viktorina-640.jpg 640w, img/gramota-viktorina.jpg 1000w" sizes="(max-width: 767px) 92vw, 50vw" alt="Грамота за първо място във викторина за Освобождението на Пловдив" data-source="client" data-subject="certificate" hidden>
+          <img width="1280" height="1706" class="frame__img" data-peek-for="gramota" src="img/gramota-rayon.jpg" srcset="img/gramota-rayon-640.jpg 640w, img/gramota-rayon.jpg 1280w" sizes="(max-width: 767px) 92vw, 50vw" alt="Грамота от район „Централен“ на Община Пловдив за Елена Бургова" data-source="client" data-subject="certificate" hidden>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="kvalifikacii" style="--hm: 2" aria-labelledby="kvalifikacii-h">
+    <div class="wrap">
+      <div class="grid">
+        <div class="span-5">
+          <h2 id="kvalifikacii-h">Квалификации и курсове</h2>
+          <ul class="rows" style="margin-top: var(--s-6)">
+            <li><span class="rows__name">Пета професионално-квалификационна степен</span></li>
+            <li><span class="rows__name">Четвърта професионално-квалификационна степен</span></li>
+            <li><span class="rows__name">Изкуствен интелект в обучението</span><span class="rows__value">2025</span></li>
+            <li><span class="rows__name">Формиращо оценяване и компетентности</span><span class="rows__value">2025</span></li>
+            <li><span class="rows__name">STEM образование с Intel</span><span class="rows__value">2024</span></li>
+          </ul>
+        </div>
+        <div class="span-6 start-7">
+          <div class="frame frame--photo" style="aspect-ratio: 2 / 1"><img width="1080" height="525" class="frame__img" src="img/uchiteli.jpg" srcset="img/uchiteli-640.jpg 640w, img/uchiteli.jpg 1080w" sizes="(max-width: 767px) 92vw, 50vw" alt="Елена Бургова с група учители пред сграда" loading="lazy" data-source="client" data-subject="colleagues"></div>
+          <h3 class="t-card" style="margin-top: var(--s-6)">Инструменти в часа</h3>
+          <div class="tools">
+            <span class="ic-chip ic-chip--lg"><img loading="lazy" class="ic" src="assets/icons/openai.svg" alt="" width="22" height="22">ChatGPT</span>
+            <span class="ic-chip ic-chip--lg"><img loading="lazy" class="ic" src="assets/icons/claude.svg" alt="" width="22" height="22">Claude</span>
+            <span class="ic-chip ic-chip--lg"><img loading="lazy" class="ic" src="assets/icons/gemini.svg" alt="" width="22" height="22">Gemini</span>
+            <span class="ic-chip ic-chip--lg"><img class="ic ic-tall" src="assets/icons/google-maps.svg" alt="" width="16" height="22">Google Maps</span>
+            <span class="ic-chip ic-chip--lg"><img loading="lazy" class="ic" src="assets/icons/docx.svg" alt="" width="22" height="22">Word</span>
+            <span class="ic-chip ic-chip--lg"><img loading="lazy" class="ic" src="assets/icons/xlsx.svg" alt="" width="22" height="22">Excel</span>
+            <span class="ic-chip ic-chip--lg"><img loading="lazy" class="ic" src="assets/icons/pptx.svg" alt="" width="22" height="22">PowerPoint</span>
+          </div>
+          <p class="tools-more">Също Padlet, Pictramap, Book Creator, Liveworksheets, Genially, Canva, NotebookLM, Gamma, Mango AI, Google Sites и MyHeritage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer closing" id="contact" aria-labelledby="close-h">
+  <div class="wrap">
+    <div class="closing__cta close--type">
+      <div class="section-head">
+        <h2 id="close-h">Пишете на Елена</h2>
+        <p>За съвместни уроци, проекти и въпроси от родители.</p>
+      </div>
+      <a class="btn btn--primary btn--xl btn--wide" href="mailto:elena@burgova.example">Пишете на Елена<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+    </div>
+    <div class="closing__links">
+      <div class="grid">
+        <div class="span-4 stack-4">
+          <a class="nav__logo" href="#top"><span class="mark" data-mark="arc" aria-hidden="true"></span>Елена Бургова</a>
+          <p class="footer__lede">Учител по история в Пловдив.</p>
+        </div>
+        <div class="span-2 start-7 footer__col"><h3>Профил</h3><ul><li><a href="#profil">За Елена</a></li><li><a href="#opit">Опит</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Методи</h3><ul><li><a href="#metodi">Методи</a></li><li><a href="#materiali">Материали</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Постижения</h3><ul><li><a href="#postizheniya">Награди</a></li><li><a href="#kvalifikacii">Квалификации</a></li></ul></div>
+      </div>
+      <div class="footer__legal">
+        <span>&copy; 2026 Елена Бургова</span>
+        <div class="socials"></div>
+        <span class="credits">Видео: Pexels. Имената и логата на продуктите са търговски марки на собствениците им.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<nav class="actionbar" aria-label="Бързи действия">
+  <a class="btn btn--primary" href="mailto:elena@burgova.example">Пишете на Елена</a>
+</nav>
+
+<script type="module" src="assets/system.js"></script>
+<script type="module" src="assets/motion/motion.js"></script>
+<script type="module" src="assets/layout/layout.js"></script>
+<script>
+  /* the hero film: plays muted unless the visitor asked for less motion; one pause button */
+  (() => {
+    const v = document.getElementById('hero-film'), b = document.querySelector('.film-pause');
+    if (!v || !b) return;
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!still) { v.autoplay = true; v.play().catch(() => {}); }
+    else b.hidden = true;
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) v.pause(); else if (!still && b.getAttribute('aria-pressed') !== 'true') v.play().catch(() => {});
+    });
+    b.addEventListener('click', () => {
+      const p = !v.paused; p ? v.pause() : v.play();
+      b.setAttribute('aria-pressed', String(p)); b.setAttribute('aria-label', p ? 'Пусни видеото' : 'Пауза на видеото');
+    });
+  })();
+  /* the timeline: the line follows the scroll inside its own section and each year darkens once the line reaches it */
+  (() => {
+    const tl = document.getElementById('tl');
+    if (!tl || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.documentElement.classList.add('js-tl');
+    const items = [...tl.querySelectorAll('.tl-item')], fill = tl.querySelector('.tl-fill');
+    fill.style.transform = 'scaleY(0)';
+    let ticking = false;
+    const run = () => {
+      ticking = false;
+      const r = tl.getBoundingClientRect(), mid = innerHeight * 0.6;
+      const p = Math.min(1, Math.max(0, (mid - r.top) / r.height));
+      fill.style.transform = `scaleY(${p.toFixed(4)})`;
+      items.forEach(it => it.classList.toggle('passed', it.getBoundingClientRect().top + 20 < mid));
+    };
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(run); } }, { passive: true });
+    addEventListener('resize', run); run();
+  })();
+</script>
+</body>
+</html>
