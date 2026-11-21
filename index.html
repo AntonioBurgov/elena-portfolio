@@ -117,24 +117,32 @@
   main > section#opit { height: auto; min-height: 0; }
   main > section#filosofiya { height: auto; min-height: 0; padding-block: var(--s-10); display: flex; flex-direction: column; justify-content: center; }
 
-  /* school-life slider (brief: auto-sliding, from her Wix "Училищен живот"): one step every 3.5 s, a pause button,
-     arrows; it waits while the pointer or the focus is on it, and stands still under reduced motion */
-  .section-head--row > .sl-ctrls { display: flex; gap: var(--s-2); align-self: end; }
+  /* school-life slider (brief: the page's full width, gliding slowly and without stop): the row runs twice
+     so it loops seamlessly; it waits under the pointer and on the pause button; under reduced motion it stands
+     and scrolls by hand */
+  .sl-ctrls { display: flex; gap: var(--s-2); }
+  .section-head--row > .sl-ctrls { display: flex; align-self: end; }
   .sl-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--ink); background: transparent; color: var(--ink); display: grid; place-items: center; cursor: pointer;
     transition: transform 160ms var(--ease), background-color 150ms var(--ease), color 150ms var(--ease); }
   .sl-btn:active { transform: scale(.97); }
   @media (hover: hover) and (pointer: fine) { .sl-btn:hover { background: var(--ink); color: var(--bg); } }
   .sl-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .sl-btn .i-play { display: none; } .sl-btn[aria-pressed="true"] .i-play { display: block; } .sl-btn[aria-pressed="true"] .i-pause { display: none; }
-  .sl { overflow: hidden; margin-top: var(--s-6); border-radius: var(--r-lg); }
-  .sl-track { display: flex; gap: var(--s-3); margin: 0; padding: 0; list-style: none; transition: transform 700ms cubic-bezier(.22,1,.36,1); }
-  .sl-slide { flex: none; }
-  .sl-slide img { display: block; height: 440px; width: auto; border-radius: var(--r-lg); }
-  @media (max-width: 639px) { .sl-slide img { height: 300px; } }
-  @media (prefers-reduced-motion: reduce) { .sl-track { transition: none; } .sl-pause { display: none; } }
+  main > section#uchilishte { height: auto; min-height: 0; }
+  .sl { width: 100vw; margin-left: calc(50% - 50vw); margin-top: var(--s-6); overflow: hidden; }
+  .sl-track { display: flex; width: max-content; gap: var(--s-3); margin: 0; padding: 0; list-style: none;
+    animation: sl-glide 90s linear infinite; }
+  .sl-track > li { flex: none; }
+  .sl-track img { display: block; height: 480px; width: auto; border-radius: var(--r-lg); }
+  @keyframes sl-glide { to { transform: translateX(calc(-50% - var(--s-3) / 2)); } }
+  .sl:hover .sl-track, .sl:focus-within .sl-track, .sl.is-paused .sl-track { animation-play-state: paused; }
+  @media (max-width: 639px) { .sl-track img { height: 280px; } .sl-track { animation-duration: 70s; } }
+  @media (prefers-reduced-motion: reduce) { .sl { overflow-x: auto; } .sl-track { animation: none; } .sl-track > [aria-hidden="true"] { display: none; } .sl-pause { display: none; } }
 
   /* student winners on the dark band */
-  #postizheniya .tile__media { --tile-ratio: 4 / 3; }
+  #postizheniya .tile__media { --tile-ratio: 3 / 4; }
+  #postizheniya .tile__media > img { object-position: 50% 50% !important; }
+  main > section#postizheniya { height: auto; min-height: 0; }
   #postizheniya .tile__head .tile__price { color: var(--p-inv-muted); }
 
   @media (max-width: 639px) { #metodi { min-height: calc(2 * 100lvh); } }
@@ -346,25 +354,35 @@
       <div class="section-head section-head--row">
         <div><h2 id="uchilishte-h">Училищен живот</h2><p>Екскурзии, открити уроци, постановки и обучения с колеги и ученици.</p></div>
         <div class="sl-ctrls">
-          <button class="sl-btn" type="button" data-sl="prev" aria-label="Предишна снимка"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
           <button class="sl-btn sl-pause" type="button" aria-pressed="false" aria-label="Спри въртенето"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7z"/></svg></button>
-          <button class="sl-btn" type="button" data-sl="next" aria-label="Следваща снимка"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
         </div>
       </div>
-      <div class="sl" aria-roledescription="въртележка" aria-label="Снимки от училищния живот">
+      <div class="sl" aria-label="Снимки от училищния живот">
         <ul class="sl-track">
-          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="1 от 12"><img decoding="async" width="1080" height="525" src="img/zhivot-01.jpg" alt="Учители от училището на обучение пред историческа сграда" data-source="client" data-subject="school life"></li>
-          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="2 от 12"><img decoding="async" width="960" height="720" src="img/zhivot-02.jpg" alt="Ученици на екскурзия пред сграда с колони" data-source="client" data-subject="school life"></li>
-          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="3 от 12"><img decoding="async" width="720" height="540" src="img/zhivot-03.jpg" alt="Ученици с грамоти в зала с декори" data-source="client" data-subject="school life"></li>
-          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="4 от 12"><img decoding="async" width="960" height="720" src="img/zhivot-04.jpg" alt="Ученици с плакат за възрожденци в двора" data-source="client" data-subject="school life"></li>
-          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="5 от 12"><img decoding="async" width="590" height="443" src="img/zhivot-05.jpg" alt="Ученици и учители на излет в парк" data-source="client" data-subject="school life"></li>
-          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="6 от 12"><img decoding="async" width="590" height="443" src="img/zhivot-06.jpg" alt="Ученици в римски костюми на сцена на открито" data-source="client" data-subject="school life"></li>
-          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="7 от 12"><img decoding="async" width="630" height="840" src="img/zhivot-07.jpg" alt="Ученик представя урок пред екран" data-source="client" data-subject="school life"></li>
-          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="8 от 12"><img decoding="async" width="590" height="443" src="img/zhivot-08.jpg" alt="Ученици на обща маса в класната стая" data-source="client" data-subject="school life"></li>
-          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="9 от 12"><img decoding="async" width="590" height="394" src="img/zhivot-09.jpg" alt="Учители с удостоверения пред училище" data-source="client" data-subject="school life"></li>
-          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="10 от 12"><img decoding="async" width="590" height="443" src="img/zhivot-10.jpg" alt="Елена Бургова води урок в кабинет по история" data-source="client" data-subject="school life"></li>
-          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="11 от 12"><img decoding="async" width="630" height="840" src="img/zhivot-11.jpg" alt="Елена Бургова с две ученички в униформи" data-source="client" data-subject="school life"></li>
-          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="12 от 12"><img decoding="async" width="630" height="840" src="img/zhivot-12.jpg" alt="Елена Бургова представя урок в музейна зала" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide"><img decoding="async" width="1080" height="525" src="img/zhivot-01.jpg" alt="Учители от училището на обучение пред историческа сграда" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide"><img decoding="async" width="960" height="720" src="img/zhivot-02.jpg" alt="Ученици на екскурзия пред сграда с колони" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide"><img decoding="async" width="720" height="540" src="img/zhivot-03.jpg" alt="Ученици с грамоти в зала с декори" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide"><img decoding="async" width="960" height="720" src="img/zhivot-04.jpg" alt="Ученици с плакат за възрожденци в двора" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide"><img decoding="async" width="590" height="443" src="img/zhivot-05.jpg" alt="Ученици и учители на излет в парк" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide"><img decoding="async" width="590" height="443" src="img/zhivot-06.jpg" alt="Ученици в римски костюми на сцена на открито" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide"><img decoding="async" width="630" height="840" src="img/zhivot-07.jpg" alt="Ученик представя урок пред екран" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide"><img decoding="async" width="590" height="443" src="img/zhivot-08.jpg" alt="Ученици на обща маса в класната стая" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide"><img decoding="async" width="590" height="394" src="img/zhivot-09.jpg" alt="Учители с удостоверения пред училище" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide"><img decoding="async" width="590" height="443" src="img/zhivot-10.jpg" alt="Елена Бургова води урок в кабинет по история" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide"><img decoding="async" width="630" height="840" src="img/zhivot-11.jpg" alt="Елена Бургова с две ученички в униформи" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide"><img decoding="async" width="630" height="840" src="img/zhivot-12.jpg" alt="Елена Бургова представя урок в музейна зала" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" aria-hidden="true"><img decoding="async" width="1080" height="525" src="img/zhivot-01.jpg" alt="" data-alt="Учители от училището на обучение пред историческа сграда" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" aria-hidden="true"><img decoding="async" width="960" height="720" src="img/zhivot-02.jpg" alt="" data-alt="Ученици на екскурзия пред сграда с колони" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" aria-hidden="true"><img decoding="async" width="720" height="540" src="img/zhivot-03.jpg" alt="" data-alt="Ученици с грамоти в зала с декори" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" aria-hidden="true"><img decoding="async" width="960" height="720" src="img/zhivot-04.jpg" alt="" data-alt="Ученици с плакат за възрожденци в двора" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" aria-hidden="true"><img decoding="async" width="590" height="443" src="img/zhivot-05.jpg" alt="" data-alt="Ученици и учители на излет в парк" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" aria-hidden="true"><img decoding="async" width="590" height="443" src="img/zhivot-06.jpg" alt="" data-alt="Ученици в римски костюми на сцена на открито" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" aria-hidden="true"><img decoding="async" width="630" height="840" src="img/zhivot-07.jpg" alt="" data-alt="Ученик представя урок пред екран" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" aria-hidden="true"><img decoding="async" width="590" height="443" src="img/zhivot-08.jpg" alt="" data-alt="Ученици на обща маса в класната стая" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" aria-hidden="true"><img decoding="async" width="590" height="394" src="img/zhivot-09.jpg" alt="" data-alt="Учители с удостоверения пред училище" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" aria-hidden="true"><img decoding="async" width="590" height="443" src="img/zhivot-10.jpg" alt="" data-alt="Елена Бургова води урок в кабинет по история" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" aria-hidden="true"><img decoding="async" width="630" height="840" src="img/zhivot-11.jpg" alt="" data-alt="Елена Бургова с две ученички в униформи" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" aria-hidden="true"><img decoding="async" width="630" height="840" src="img/zhivot-12.jpg" alt="" data-alt="Елена Бургова представя урок в музейна зала" data-source="client" data-subject="school life"></li>
         </ul>
       </div>
     </div>
@@ -496,31 +514,14 @@
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(run); } }, { passive: true });
     addEventListener('resize', run); run();
   })();
-  /* school-life slider: steps one photo every 3.5 s; waits under the pointer, on focus, when off screen or paused */
+  /* school-life slider: the glide is CSS; the button pauses it, a hidden tab rests it */
   (() => {
-    const root = document.getElementById('uchilishte'); if (!root) return;
-    const sl = root.querySelector('.sl'), track = root.querySelector('.sl-track'), slides = [...track.children];
-    const pauseBtn = root.querySelector('.sl-pause');
-    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let i = 0, paused = still, hover = false, seen = false, timer = 0;
-    const max = () => Math.max(0, track.scrollWidth - sl.clientWidth);
-    const go = n => {
-      const atEnd = Math.abs(-currentX() - max()) < 2;
-      i = (n + slides.length) % slides.length;
-      if (n > 0 && atEnd && i !== 0) i = 0;
-      const x = Math.min(slides[i].offsetLeft, max());
-      track.style.transform = `translateX(${-x}px)`;
-    };
-    const currentX = () => { const m = /translateX\((-?[\d.]+)px\)/.exec(track.style.transform); return m ? +m[1] : 0; };
-    const tick = () => { if (!paused && !hover && seen && !document.hidden) go(i + 1); };
-    if (!still) timer = setInterval(tick, 3500);
-    root.querySelector('[data-sl="next"]').addEventListener('click', () => go(i + 1));
-    root.querySelector('[data-sl="prev"]').addEventListener('click', () => go(i - 1));
-    pauseBtn.addEventListener('click', () => { paused = !paused; pauseBtn.setAttribute('aria-pressed', String(paused)); pauseBtn.setAttribute('aria-label', paused ? 'Пусни въртенето' : 'Спри въртенето'); });
-    sl.addEventListener('pointerenter', () => hover = true); sl.addEventListener('pointerleave', () => hover = false);
-    root.addEventListener('focusin', () => hover = true); root.addEventListener('focusout', () => hover = false);
-    new IntersectionObserver(es => { seen = es[0].isIntersecting; }, { threshold: 0.3 }).observe(sl);
-    addEventListener('resize', () => go(i));
+    const sl = document.querySelector('#uchilishte .sl'), btn = document.querySelector('#uchilishte .sl-pause');
+    if (!sl || !btn) return;
+    btn.addEventListener('click', () => {
+      const p = sl.classList.toggle('is-paused');
+      btn.setAttribute('aria-pressed', String(p)); btn.setAttribute('aria-label', p ? 'Пусни снимките' : 'Спри снимките');
+    });
   })();
 </script>
 </body>
