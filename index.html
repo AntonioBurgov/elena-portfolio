@@ -66,32 +66,76 @@
   .film-pause svg { width: 12px; height: 12px; }
   .film-pause .i-play { display: none; } .film-pause[aria-pressed="true"] .i-play { display: block; } .film-pause[aria-pressed="true"] .i-pause { display: none; }
   @media (prefers-reduced-motion: reduce) { .film-pause { display: none; } }
+  @media (pointer: coarse), (max-width: 639px) { .film-pause { width: 44px; height: 44px; } }
 
-  /* timeline (antonioburgov.github.io/portfolio, "The path so far"): the line draws and each year darkens as it is passed */
-  /* one rail on the page's columns: the year on the left line (cols 1-2), the line and dot in col 3, the card from col 4 */
-  .tl { position: relative; margin-top: var(--s-7); --col: calc((100% - 11 * 24px) / 12); }
-  .tl-line { position: absolute; left: calc(5 * var(--col) + 5 * 24px + var(--col) / 2); top: 8px; bottom: 8px; width: 1px; background: var(--line); transform: translateX(-50%); }
+  /* light grounds (brief: fewer white stretches): Calenne's sand and stone */
+  .g-sand { background: #f2ece5; } .g-stone { background: #e9e0d5; }
+  .g-stone { --muted: #5f534d; }
+
+  /* timeline (antonioburgov.github.io/portfolio, "The path so far"): the line draws and each year darkens as it is passed;
+     two lanes so the kind reads at a glance: education left on sand cards, work right on white cards */
+  .tl { position: relative; margin-top: var(--s-6); }
+  .tl-lanes { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; margin-bottom: var(--s-4); }
+  .tl-lane { display: inline-flex; align-items: center; gap: var(--s-2); font-size: var(--t-label); font-weight: 500; }
+  .tl-lane--edu { grid-column: 1 / 6; } .tl-lane--work { grid-column: 7 / 13; }
+  .tl svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .tl-rail { position: relative; }
+  .tl-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: var(--line); transform: translateX(-50%); }
   .tl-fill { position: absolute; inset: 0; background: var(--ink); transform-origin: 50% 0; }
-  .tl-item { position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start; }
-  .tl-item + .tl-item { margin-top: calc(var(--s-10) + var(--s-3)); }
-  .tl-year { grid-column: 1 / 6; font: var(--display-weight) 40px/1 var(--font-display); letter-spacing: -0.02em; color: var(--ink); transition: color 300ms var(--ease); }
-  .js-tl .tl-item:not(.passed) .tl-year { color: #8f8179; }
-  .tl-dot { grid-column: 6; justify-self: center; position: relative; z-index: 1; width: 14px; height: 14px; margin-top: 12px; border-radius: 50%; background: var(--ink); border: 2px solid var(--ink); transition: background-color 200ms var(--ease); }
+  .tl-item { position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; }
+  .tl-item + .tl-item { margin-top: var(--s-4); }
+  /* lanes interleave: a card in the other lane starts beside the one before it */
+  .tl-item--edu + .tl-item--work, .tl-item--work + .tl-item--edu { margin-top: -72px; }
+  @media (min-width: 768px) and (max-width: 1279px) { .tl-item + .tl-item { margin-top: var(--s-3); } .tl-card { padding: var(--s-4); } .tl-card h3 { margin-top: var(--s-2); } }
+  .tl-dot { position: absolute; left: 50%; top: 28px; z-index: 1; width: 16px; height: 16px; border-radius: 50%; transform: translateX(-50%);
+    background: var(--ink); border: 2px solid var(--ink); transition: background-color 200ms var(--ease); }
   .js-tl .tl-item:not(.passed) .tl-dot { background: var(--bg); }
-  .tl-card { grid-column: 7 / 13; }
-  .tl-when { font-size: var(--t-label); font-weight: 500; color: var(--ink); }
-  .tl-card h3 { margin-top: var(--s-1); font: 500 var(--t-card)/1.3 var(--font-text); }
-  .tl-card p { color: var(--ink); }
-  @media (min-width: 768px) and (max-width: 1279px) { .tl-item + .tl-item { margin-top: 72px; } }
+  .tl-card { padding: var(--s-5); border-radius: var(--r-lg); }
+  .tl-item--edu .tl-card { grid-column: 1 / 6; background: #efe4d6; }
+  .tl-item--work .tl-card { grid-column: 7 / 13; background: #fff; border: 1px solid var(--line); }
+  .tl-head { display: flex; align-items: baseline; gap: var(--s-3); flex-wrap: wrap; }
+  .tl-year { font: var(--display-weight) 36px/1 var(--font-display); letter-spacing: -0.02em; color: var(--ink); transition: color 300ms var(--ease); }
+  .js-tl .tl-item:not(.passed) .tl-year { color: #8a7c74; }
+  .tl-to { font-size: var(--t-small); color: var(--ink); }
+  .tl-tag { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: var(--t-label); font-weight: 500; color: var(--ink); }
+  .tl-card h3 { margin-top: var(--s-3); font: 500 var(--t-card)/1.3 var(--font-text); }
+  .tl-card p { margin-top: 2px; color: var(--ink); }
   @media (max-width: 767px) {
-    .tl-line { left: 7px; }
-    .tl-item { grid-template-columns: 14px minmax(0, 1fr); column-gap: var(--s-4); }
-    .tl-dot { grid-area: 1 / 1; margin-top: 6px; }
-    .tl-year { grid-area: 1 / 2; font-size: 28px; }
-    .tl-card { grid-area: 2 / 2; padding-top: 4px; }
-    .tl-item + .tl-item { margin-top: 72px; }
+    .tl-lanes { display: none; }
+    .tl-line, .tl-dot { left: 7px; }
+    .tl-item { grid-template-columns: 1fr; padding-left: 32px; }
+    .tl-item--edu .tl-card, .tl-item--work .tl-card { grid-column: 1; }
+    .tl-year { font-size: 28px; }
+    .tl-item--edu + .tl-item--work, .tl-item--work + .tl-item--edu { margin-top: var(--s-4); }
   }
   @media (prefers-reduced-motion: reduce) { .js-tl .tl-item .tl-year { color: var(--ink); } .js-tl .tl-item .tl-dot { background: var(--ink); } }
+
+  /* the statement, centred (brief) on the stone band */
+  #filosofiya .wrap { text-align: center; }
+  #filosofiya .mo-wh__text { margin-inline: auto; max-width: 30ch; }
+  /* brief: less empty space. These two take their content's height instead of whole screens */
+  main > section#opit { height: auto; min-height: 0; }
+  main > section#filosofiya { height: auto; min-height: 0; padding-block: var(--s-10); display: flex; flex-direction: column; justify-content: center; }
+
+  /* school-life slider (brief: auto-sliding, from her Wix "Училищен живот"): one step every 3.5 s, a pause button,
+     arrows; it waits while the pointer or the focus is on it, and stands still under reduced motion */
+  .section-head--row > .sl-ctrls { display: flex; gap: var(--s-2); align-self: end; }
+  .sl-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--ink); background: transparent; color: var(--ink); display: grid; place-items: center; cursor: pointer;
+    transition: transform 160ms var(--ease), background-color 150ms var(--ease), color 150ms var(--ease); }
+  .sl-btn:active { transform: scale(.97); }
+  @media (hover: hover) and (pointer: fine) { .sl-btn:hover { background: var(--ink); color: var(--bg); } }
+  .sl-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .sl-btn .i-play { display: none; } .sl-btn[aria-pressed="true"] .i-play { display: block; } .sl-btn[aria-pressed="true"] .i-pause { display: none; }
+  .sl { overflow: hidden; margin-top: var(--s-6); border-radius: var(--r-lg); }
+  .sl-track { display: flex; gap: var(--s-3); margin: 0; padding: 0; list-style: none; transition: transform 700ms cubic-bezier(.22,1,.36,1); }
+  .sl-slide { flex: none; }
+  .sl-slide img { display: block; height: 440px; width: auto; border-radius: var(--r-lg); }
+  @media (max-width: 639px) { .sl-slide img { height: 300px; } }
+  @media (prefers-reduced-motion: reduce) { .sl-track { transition: none; } .sl-pause { display: none; } }
+
+  /* student winners on the dark band */
+  #postizheniya .tile__media { --tile-ratio: 4 / 3; }
+  #postizheniya .tile__head .tile__price { color: var(--p-inv-muted); }
 
   @media (max-width: 639px) { #metodi { min-height: calc(2 * 100lvh); } }
   .about__quote { margin-top: var(--s-5); font: italic 400 20px/1.5 var(--font-display); color: var(--ink); }
@@ -140,6 +184,7 @@
           </div>
         </div>
       </div>
+      <div class="nav__item"><a class="nav__link" href="#uchilishte">Училище</a></div>
       <div class="nav__item"><a class="nav__link" href="#postizheniya">Постижения</a></div>
       <div class="nav__item"><a class="nav__link" href="#kvalifikacii">Квалификации</a></div>
     </nav>
@@ -157,6 +202,7 @@
     <!-- stand-in film (Pexels 8342243): replace with a clip from Elena's own lessons -->
     <video id="hero-film" class="layer hero-wide__film" data-enter-media muted loop playsinline preload="metadata" poster="img/klas-poster.jpg" aria-hidden="true" data-source="library" data-subject="classroom">
       <source src="media/klas-720.mp4" type="video/mp4" media="(max-width: 767px)">
+      <source src="media/klas-1440p.mp4" type="video/mp4" media="(min-width: 1500px), (min-width: 1100px) and (min-resolution: 2dppx)">
       <source src="media/klas.mp4" type="video/mp4">
     </video>
     <div class="wrap">
@@ -177,7 +223,7 @@
     </div>
   </section>
 
-  <section class="section" id="profil" style="--hm: 2" aria-labelledby="profil-h">
+  <section class="section g-sand" id="profil" style="--hm: 2" aria-labelledby="profil-h">
     <div class="wrap">
       <div class="grid">
         <div class="span-5">
@@ -188,6 +234,8 @@
             <li><span class="rows__name">Областна комисия на олимпиадата по история</span></li>
             <li><span class="rows__name">Лектор в работните срещи на РУО Пловдив</span></li>
             <li><span class="rows__name">Ко-преподаване и уроци с изкуствен интелект</span></li>
+            <li><span class="rows__name">Грамота от район „Централен“ за учебната работа</span><span class="rows__value">2023/24</span></li>
+            <li><span class="rows__name">Първо място на училищния отбор във викторина</span></li>
           </ul>
           <blockquote class="about__quote">„Тръгне ли човек с чисти подбуди към нещо, винаги успява.“<cite>Невена Коканова, любим цитат на Елена</cite></blockquote>
         </div>
@@ -204,21 +252,24 @@
         <h2 id="opit-h">Опит и образование. <span class="muted">Четири училища в Пазарджик и Пловдив.</span></h2>
       </div>
       <div class="tl" id="tl">
-        <div class="tl-line" aria-hidden="true"><div class="tl-fill"></div></div>
-        <article class="tl-item"><div class="tl-year">1987</div><div class="tl-dot" aria-hidden="true"></div>
-          <div class="tl-card"><span class="tl-when">Училище · 1987 – 1992</span><h3>ЕГ „Бертолт Брехт“, Пазарджик</h3><p>Езикова гимназия с немски език</p></div></article>
-        <article class="tl-item"><div class="tl-year">1992</div><div class="tl-dot" aria-hidden="true"></div>
-          <div class="tl-card"><span class="tl-when">Образование · 1992 – 1997</span><h3>Магистър по история</h3><p>ВТУ „Св. Св. Кирил и Методий“, специализация „Древност и археология“</p></div></article>
-        <article class="tl-item"><div class="tl-year">1997</div><div class="tl-dot" aria-hidden="true"></div>
-          <div class="tl-card"><span class="tl-when">Работа · 1997 – 2003</span><h3>СОУ „Д-р Петър Берон“, Пазарджик</h3><p>Учител по история и цивилизации</p></div></article>
-        <article class="tl-item"><div class="tl-year">2006</div><div class="tl-dot" aria-hidden="true"></div>
-          <div class="tl-card"><span class="tl-when">Работа · 2006 – 2007</span><h3>ЕГ „Пловдив“</h3><p>Учител по история и цивилизации</p></div></article>
-        <article class="tl-item"><div class="tl-year">2007</div><div class="tl-dot" aria-hidden="true"></div>
-          <div class="tl-card"><span class="tl-when">Работа · 2007 – 2016</span><h3>СОУ „Симон Боливар“, Пловдив</h3><p>Учител по история и цивилизации</p></div></article>
-        <article class="tl-item"><div class="tl-year">2008</div><div class="tl-dot" aria-hidden="true"></div>
-          <div class="tl-card"><span class="tl-when">Квалификация · 2008 – 2009</span><h3>Учител по немски език</h3><p>СУ „Св. Климент Охридски“, Факултет по класически и нови филологии</p></div></article>
-        <article class="tl-item"><div class="tl-year">2016</div><div class="tl-dot" aria-hidden="true"></div>
-          <div class="tl-card"><span class="tl-when">Работа · 2016 – досега</span><h3>СУ „Св. Паисий Хилендарски“, Пловдив</h3><p>Учител по история и цивилизации</p></div></article>
+        <div class="tl-lanes" aria-hidden="true"><span class="tl-lane tl-lane--edu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Образование</span><span class="tl-lane tl-lane--work"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>Работа</span></div>
+        <div class="tl-rail">
+          <div class="tl-line" aria-hidden="true"><div class="tl-fill"></div></div>
+          <article class="tl-item tl-item--edu"><span class="tl-dot" aria-hidden="true"></span>
+            <div class="tl-card"><div class="tl-head"><span class="tl-year">1987</span><span class="tl-to">– 1992</span><span class="tl-tag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Образование</span></div><h3>ЕГ „Бертолт Брехт“, Пазарджик</h3><p>Езикова гимназия с немски език</p></div></article>
+          <article class="tl-item tl-item--edu"><span class="tl-dot" aria-hidden="true"></span>
+            <div class="tl-card"><div class="tl-head"><span class="tl-year">1992</span><span class="tl-to">– 1997</span><span class="tl-tag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Образование</span></div><h3>Магистър по история</h3><p>ВТУ „Св. Св. Кирил и Методий“, специализация „Древност и археология“</p></div></article>
+          <article class="tl-item tl-item--work"><span class="tl-dot" aria-hidden="true"></span>
+            <div class="tl-card"><div class="tl-head"><span class="tl-year">1997</span><span class="tl-to">– 2003</span><span class="tl-tag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>Работа</span></div><h3>СОУ „Д-р Петър Берон“, Пазарджик</h3><p>Учител по история и цивилизации</p></div></article>
+          <article class="tl-item tl-item--work"><span class="tl-dot" aria-hidden="true"></span>
+            <div class="tl-card"><div class="tl-head"><span class="tl-year">2006</span><span class="tl-to">– 2007</span><span class="tl-tag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>Работа</span></div><h3>ЕГ „Пловдив“</h3><p>Учител по история и цивилизации</p></div></article>
+          <article class="tl-item tl-item--work"><span class="tl-dot" aria-hidden="true"></span>
+            <div class="tl-card"><div class="tl-head"><span class="tl-year">2007</span><span class="tl-to">– 2016</span><span class="tl-tag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>Работа</span></div><h3>СОУ „Симон Боливар“, Пловдив</h3><p>Учител по история и цивилизации</p></div></article>
+          <article class="tl-item tl-item--edu"><span class="tl-dot" aria-hidden="true"></span>
+            <div class="tl-card"><div class="tl-head"><span class="tl-year">2008</span><span class="tl-to">– 2009</span><span class="tl-tag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Образование</span></div><h3>Учител по немски език</h3><p>СУ „Св. Климент Охридски“, Факултет по класически и нови филологии</p></div></article>
+          <article class="tl-item tl-item--work"><span class="tl-dot" aria-hidden="true"></span>
+            <div class="tl-card"><div class="tl-head"><span class="tl-year">2016</span><span class="tl-to">– досега</span><span class="tl-tag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>Работа</span></div><h3>СУ „Св. Паисий Хилендарски“, Пловдив</h3><p>Учител по история и цивилизации</p></div></article>
+        </div>
       </div>
     </div>
   </section>
@@ -249,7 +300,7 @@
     </div>
   </section>
 
-  <section class="section statement" id="filosofiya" data-moment="word-highlight" aria-label="Философия на преподаване">
+  <section class="section statement g-stone" id="filosofiya" data-moment="word-highlight" aria-label="Философия на преподаване">
     <div class="wrap">
       <p class="t-label">Философия на преподаване</p>
       <p class="mo-wh__text">Историята е повече от факти и дати. Уча учениците да търсят <strong>причините</strong>, да четат изворите и да свързват миналото с днешния ден.</p>
@@ -290,26 +341,56 @@
     </div>
   </section>
 
-  <section class="section ground-inverse" id="postizheniya" style="--hm: 2" aria-labelledby="postizheniya-h">
+  <section class="section g-sand" id="uchilishte" aria-labelledby="uchilishte-h">
+    <div class="wrap">
+      <div class="section-head section-head--row">
+        <div><h2 id="uchilishte-h">Училищен живот</h2><p>Екскурзии, открити уроци, постановки и обучения с колеги и ученици.</p></div>
+        <div class="sl-ctrls">
+          <button class="sl-btn" type="button" data-sl="prev" aria-label="Предишна снимка"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+          <button class="sl-btn sl-pause" type="button" aria-pressed="false" aria-label="Спри въртенето"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7z"/></svg></button>
+          <button class="sl-btn" type="button" data-sl="next" aria-label="Следваща снимка"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+        </div>
+      </div>
+      <div class="sl" aria-roledescription="въртележка" aria-label="Снимки от училищния живот">
+        <ul class="sl-track">
+          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="1 от 12"><img decoding="async" width="1080" height="525" src="img/zhivot-01.jpg" alt="Учители от училището на обучение пред историческа сграда" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="2 от 12"><img decoding="async" width="960" height="720" src="img/zhivot-02.jpg" alt="Ученици на екскурзия пред сграда с колони" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="3 от 12"><img decoding="async" width="720" height="540" src="img/zhivot-03.jpg" alt="Ученици с грамоти в зала с декори" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="4 от 12"><img decoding="async" width="960" height="720" src="img/zhivot-04.jpg" alt="Ученици с плакат за възрожденци в двора" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="5 от 12"><img decoding="async" width="590" height="443" src="img/zhivot-05.jpg" alt="Ученици и учители на излет в парк" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="6 от 12"><img decoding="async" width="590" height="443" src="img/zhivot-06.jpg" alt="Ученици в римски костюми на сцена на открито" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="7 от 12"><img decoding="async" width="630" height="840" src="img/zhivot-07.jpg" alt="Ученик представя урок пред екран" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="8 от 12"><img decoding="async" width="590" height="443" src="img/zhivot-08.jpg" alt="Ученици на обща маса в класната стая" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="9 от 12"><img decoding="async" width="590" height="394" src="img/zhivot-09.jpg" alt="Учители с удостоверения пред училище" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="10 от 12"><img decoding="async" width="590" height="443" src="img/zhivot-10.jpg" alt="Елена Бургова води урок в кабинет по история" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="11 от 12"><img decoding="async" width="630" height="840" src="img/zhivot-11.jpg" alt="Елена Бургова с две ученички в униформи" data-source="client" data-subject="school life"></li>
+          <li class="sl-slide" role="group" aria-roledescription="снимка" aria-label="12 от 12"><img decoding="async" width="630" height="840" src="img/zhivot-12.jpg" alt="Елена Бургова представя урок в музейна зала" data-source="client" data-subject="school life"></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section ground-inverse" id="postizheniya" aria-labelledby="postizheniya-h">
     <div class="wrap">
       <div class="section-head">
-        <h2 id="postizheniya-h">Постижения и награди. <span class="muted">Ученици на Елена на олимпиадата по история.</span></h2>
+        <h2 id="postizheniya-h">Постижения на учениците. <span class="muted">Олимпиадата по история и цивилизации.</span></h2>
       </div>
-      <div class="grid grid--top fill" data-peek>
-        <ul class="rows span-5">
-          <li data-peek-to="kaloyan" tabindex="0"><span class="rows__name">Калоян Димов</span><p>Четвърти в страната, национален кръг</p><span class="rows__value">2023</span></li>
-          <li data-peek-to="teodor" tabindex="0"><span class="rows__name">Теодор Чаушев</span><p>Трето място, областен кръг</p><span class="rows__value">2025</span></li>
-          <li data-peek-to="klasove" tabindex="0"><span class="rows__name">Ученици от 5., 6. и 7. клас</span><p>Първо, второ и трето място, областен кръг</p><span class="rows__value">2024</span></li>
-          <li data-peek-to="viktorina" tabindex="0"><span class="rows__name">Отбор на училището</span><p>Първо място във викторина за Освобождението на Пловдив</p></li>
-          <li data-peek-to="gramota" tabindex="0"><span class="rows__name">Грамота за Елена</span><p>Район „Централен“, за високи постижения в работата</p><span class="rows__value">2023/24</span></li>
-        </ul>
-        <div class="frame frame--photo frame--fill span-6 start-7">
-          <img loading="lazy" width="1000" height="1334" class="frame__img" data-peek-for="kaloyan" src="img/kaloyan.jpg" alt="Калоян Димов с грамота пред читалище" data-source="client" data-subject="student" style="object-position: 50% 8%">
-          <img width="1000" height="1410" class="frame__img" data-peek-for="teodor" src="img/teodor.jpg" alt="Теодор Чаушев" data-source="client" data-subject="student" hidden style="object-position: 50% 12%">
-          <img width="1000" height="1328" class="frame__img" data-peek-for="klasove" src="img/olimpiada-2024.jpg" srcset="img/olimpiada-2024-640.jpg 640w, img/olimpiada-2024.jpg 1000w" sizes="(max-width: 767px) 92vw, 50vw" alt="Ученици от 5., 6. и 7. клас пред стенопис" data-source="client" data-subject="students" hidden style="object-position: 50% 30%">
-          <img width="1000" height="1334" class="frame__img" data-peek-for="viktorina" src="img/gramota-viktorina.jpg" srcset="img/gramota-viktorina-640.jpg 640w, img/gramota-viktorina.jpg 1000w" sizes="(max-width: 767px) 92vw, 50vw" alt="Грамота за първо място във викторина за Освобождението на Пловдив" data-source="client" data-subject="certificate" hidden>
-          <img width="1280" height="1706" class="frame__img" data-peek-for="gramota" src="img/gramota-rayon.jpg" srcset="img/gramota-rayon-640.jpg 640w, img/gramota-rayon.jpg 1280w" sizes="(max-width: 767px) 92vw, 50vw" alt="Грамота от район „Централен“ на Община Пловдив за Елена Бургова" data-source="client" data-subject="certificate" hidden>
-        </div>
+      <div class="grid">
+        <article class="tile span-4">
+          <div class="tile__media"><img loading="lazy" width="1000" height="1328" src="img/olimpiada-2024.jpg" srcset="img/olimpiada-2024-640.jpg 640w, img/olimpiada-2024.jpg 1000w" sizes="(max-width: 767px) 92vw, 30vw" alt="Ученици от 5., 6. и 7. клас пред стенопис" style="object-position: 50% 30%" data-source="client" data-subject="students"></div>
+          <div class="tile__head"><h3>Ученици от 5., 6. и 7. клас</h3><span class="tile__price">2024</span></div>
+          <p>Първо, второ и трето място на областния кръг на олимпиадата по история.</p>
+        </article>
+        <article class="tile span-4">
+          <div class="tile__media"><img loading="lazy" width="1000" height="1334" src="img/kaloyan.jpg" alt="Калоян Димов с грамота пред читалище" style="object-position: 50% 12%" data-source="client" data-subject="student"></div>
+          <div class="tile__head"><h3>Калоян Димов</h3><span class="tile__price">2023</span></div>
+          <p>Четвърти резултат в страната на националния кръг на олимпиадата по история и цивилизации.</p>
+        </article>
+        <article class="tile span-4">
+          <div class="tile__media"><img loading="lazy" width="1000" height="1410" src="img/teodor.jpg" alt="Теодор Чаушев" style="object-position: 50% 15%" data-source="client" data-subject="student"></div>
+          <div class="tile__head"><h3>Теодор Чаушев</h3><span class="tile__price">2025</span></div>
+          <p>Трето място на областния кръг на олимпиадата по история и цивилизации.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -328,7 +409,7 @@
           </ul>
         </div>
         <div class="span-6 start-7">
-          <div class="frame frame--photo" style="aspect-ratio: 2 / 1"><img width="1080" height="525" class="frame__img" src="img/uchiteli.jpg" srcset="img/uchiteli-640.jpg 640w, img/uchiteli.jpg 1080w" sizes="(max-width: 767px) 92vw, 50vw" alt="Елена Бургова с група учители пред сграда" loading="lazy" data-source="client" data-subject="colleagues"></div>
+          <div class="frame frame--photo" style="aspect-ratio: 2 / 1"><img loading="lazy" width="1280" height="960" class="frame__img" src="img/kvalifikacia-seminar.jpg" srcset="img/kvalifikacia-seminar-640.jpg 640w, img/kvalifikacia-seminar.jpg 1280w" sizes="(max-width: 767px) 92vw, 50vw" alt="Учители на обучение в семинарна зала" data-source="client" data-subject="teacher training"></div>
           <h3 class="t-card" style="margin-top: var(--s-6)">Инструменти в часа</h3>
           <div class="tools">
             <span class="ic-chip ic-chip--lg"><img loading="lazy" class="ic" src="assets/icons/openai.svg" alt="" width="22" height="22">ChatGPT</span>
@@ -346,7 +427,7 @@
   </section>
 </main>
 
-<footer class="footer closing" id="contact" aria-labelledby="close-h">
+<footer class="footer closing g-sand" id="contact" aria-labelledby="close-h">
   <div class="wrap">
     <div class="closing__cta close--type">
       <div class="section-head">
@@ -363,7 +444,7 @@
         </div>
         <div class="span-2 start-7 footer__col"><h3>Профил</h3><ul><li><a href="#profil">За Елена</a></li><li><a href="#opit">Опит</a></li></ul></div>
         <div class="span-2 footer__col"><h3>Методи</h3><ul><li><a href="#metodi">Методи</a></li><li><a href="#materiali">Материали</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Постижения</h3><ul><li><a href="#postizheniya">Награди</a></li><li><a href="#kvalifikacii">Квалификации</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Постижения</h3><ul><li><a href="#uchilishte">Училищен живот</a></li><li><a href="#postizheniya">Ученици</a></li><li><a href="#kvalifikacii">Квалификации</a></li></ul></div>
       </div>
       <div class="footer__legal">
         <span>&copy; 2026 Елена Бургова</span>
@@ -407,13 +488,39 @@
     let ticking = false;
     const run = () => {
       ticking = false;
-      const r = tl.getBoundingClientRect(), mid = innerHeight * 0.6;
+      const r = tl.querySelector('.tl-rail').getBoundingClientRect(), mid = innerHeight * 0.6;
       const p = Math.min(1, Math.max(0, (mid - r.top) / r.height));
       fill.style.transform = `scaleY(${p.toFixed(4)})`;
       items.forEach(it => it.classList.toggle('passed', it.getBoundingClientRect().top + 20 < mid));
     };
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(run); } }, { passive: true });
     addEventListener('resize', run); run();
+  })();
+  /* school-life slider: steps one photo every 3.5 s; waits under the pointer, on focus, when off screen or paused */
+  (() => {
+    const root = document.getElementById('uchilishte'); if (!root) return;
+    const sl = root.querySelector('.sl'), track = root.querySelector('.sl-track'), slides = [...track.children];
+    const pauseBtn = root.querySelector('.sl-pause');
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0, paused = still, hover = false, seen = false, timer = 0;
+    const max = () => Math.max(0, track.scrollWidth - sl.clientWidth);
+    const go = n => {
+      const atEnd = Math.abs(-currentX() - max()) < 2;
+      i = (n + slides.length) % slides.length;
+      if (n > 0 && atEnd && i !== 0) i = 0;
+      const x = Math.min(slides[i].offsetLeft, max());
+      track.style.transform = `translateX(${-x}px)`;
+    };
+    const currentX = () => { const m = /translateX\((-?[\d.]+)px\)/.exec(track.style.transform); return m ? +m[1] : 0; };
+    const tick = () => { if (!paused && !hover && seen && !document.hidden) go(i + 1); };
+    if (!still) timer = setInterval(tick, 3500);
+    root.querySelector('[data-sl="next"]').addEventListener('click', () => go(i + 1));
+    root.querySelector('[data-sl="prev"]').addEventListener('click', () => go(i - 1));
+    pauseBtn.addEventListener('click', () => { paused = !paused; pauseBtn.setAttribute('aria-pressed', String(paused)); pauseBtn.setAttribute('aria-label', paused ? 'Пусни въртенето' : 'Спри въртенето'); });
+    sl.addEventListener('pointerenter', () => hover = true); sl.addEventListener('pointerleave', () => hover = false);
+    root.addEventListener('focusin', () => hover = true); root.addEventListener('focusout', () => hover = false);
+    new IntersectionObserver(es => { seen = es[0].isIntersecting; }, { threshold: 0.3 }).observe(sl);
+    addEventListener('resize', () => go(i));
   })();
 </script>
 </body>
