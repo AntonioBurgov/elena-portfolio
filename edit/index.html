@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Редакция на текста</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<style>
+  :root { --bg: #fcfaf8; --sand: #f2ece5; --ink: #1c1916; --muted: #5f534d; --accent: #5b4f4b; --line: #ddd5cf; --ok: #2f6b3a; --err: #a3352b; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .lock { min-height: 100%; display: grid; place-items: center; padding: 24px; }
+  .card { width: min(100%, 440px); background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 32px; }
+  h1 { margin: 0 0 8px; font: 400 28px/1.2 Georgia, serif; }
+  .lead { margin: 0 0 24px; color: var(--muted); }
+  label { display: block; margin: 16px 0 6px; font-size: 14px; font-weight: 500; }
+  input { width: 100%; height: 48px; padding: 0 14px; border: 1px solid var(--line); border-radius: 8px; font: inherit; background: var(--bg); }
+  input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .btn { height: 44px; padding: 0 20px; border: 0; border-radius: 8px; background: var(--accent); color: #fff; font: 500 15px/1 inherit; cursor: pointer; }
+  .btn:active { transform: scale(.98); }
+  .btn--ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+  .row { display: flex; gap: 12px; align-items: center; margin-top: 24px; flex-wrap: wrap; }
+  .link { background: none; border: 0; padding: 0; color: var(--muted); text-decoration: underline; cursor: pointer; font: inherit; font-size: 14px; }
+  .msg { margin-top: 16px; font-size: 14px; min-height: 1.5em; }
+  .msg.err { color: var(--err); } .msg.ok { color: var(--ok); }
+  .hint { margin-top: 8px; font-size: 13px; color: var(--muted); }
+  .bar { position: fixed; inset: 0 0 auto; z-index: 10; height: 60px; display: flex; align-items: center; gap: 12px; padding: 0 16px;
+    background: var(--ink); color: #fff; }
+  .bar strong { font-weight: 600; }
+  .bar .status { flex: 1; font-size: 14px; opacity: .85; }
+  .bar .btn { background: #fff; color: var(--ink); }
+  .bar .btn--ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.6); }
+  .frame { position: fixed; inset: 60px 0 0; width: 100%; height: calc(100% - 60px); border: 0; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- 1. first time on this computer: the GitHub key and a password that locks it here -->
+<main class="lock" id="setup" hidden>
+  <form class="card" id="setup-form">
+    <h1>Редакция на сайта</h1>
+    <p class="lead">Първо настройване на този компютър. Ключът се пази само тук, заключен с паролата.</p>
+    <label for="s-token">Ключ от GitHub</label>
+    <input id="s-token" type="password" autocomplete="off" required>
+    <p class="hint">Ключ само за хранилището elena-portfolio, с право „Contents: Read and write“.</p>
+    <label for="s-pass">Парола</label>
+    <input id="s-pass" type="password" autocomplete="new-password" required minlength="6">
+    <label for="s-pass2">Повторете паролата</label>
+    <input id="s-pass2" type="password" autocomplete="new-password" required minlength="6">
+    <div class="row"><button class="btn" type="submit">Запази и отключи</button></div>
+    <p class="msg" id="setup-msg" role="status"></p>
+  </form>
+</main>
+
+<!-- 2. every later visit: the password only -->
+<main class="lock" id="unlock" hidden>
+  <form class="card" id="unlock-form">
+    <h1>Редакция на сайта</h1>
+    <p class="lead">Въведете паролата, за да редактирате текста.</p>
+    <label for="u-pass">Парола</label>
+    <input id="u-pass" type="password" autocomplete="current-password" required>
+    <div class="row"><button class="btn" type="submit">Отключи</button><button class="link" type="button" id="reset">Нов ключ</button></div>
+    <p class="msg" id="unlock-msg" role="status"></p>
+  </form>
+</main>
+
+<!-- 3. the editor: the page itself, every text clickable -->
+<div id="editor" hidden>
+  <div class="bar">
+    <strong>Режим на редакция</strong>
+    <span class="status" id="status" role="status">Щракнете върху текст, за да го промените.</span>
+    <button class="btn btn--ghost" type="button" id="discard">Отказ</button>
+    <button class="btn" type="button" id="save">Запази промените</button>
+    <button class="btn btn--ghost" type="button" id="lock">Заключи</button>
+  </div>
+  <iframe class="frame" id="frame" title="Страницата за редакция"></iframe>
+</div>
+
+<script>
+(() => {
+  const REPO = 'AntonioBurgov/elena-portfolio', FILE = 'index.html', BRANCH = 'main', STORE = 'eb-edit-key';
+  const API = `https://api.github.com/repos/${REPO}/contents/${FILE}`;
+  const EDITABLE = 'main :is(h1, h2, h3, p, blockquote, .rows__name, .rows__value, .tl-year, .tl-to, .tile__price), footer.closing :is(h2, p)';
+  const KEEP = new Set(['EM', 'STRONG', 'SPAN', 'A', 'BR', 'B', 'I', 'CITE']);
+  const $ = id => document.getElementById(id);
+  let token = null, sha = null, raw = null, dirty = false;
+
+  /* ---- the key, locked with the password (PBKDF2 + AES-GCM); the password itself is never stored ---- */
+  const enc = new TextEncoder(), dec = new TextDecoder();
+  const b64 = buf => btoa(String.fromCharCode(...new Uint8Array(buf)));
+  const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  async function keyFrom(pass, salt) {
+    const base = await crypto.subtle.importKey('raw', enc.encode(pass), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 600000, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+  }
+  async function lockToken(tok, pass) {
+    const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+    const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, await keyFrom(pass, salt), enc.encode(tok));
+    localStorage.setItem(STORE, JSON.stringify({ salt: b64(salt), iv: b64(iv), ct: b64(ct) }));
+  }
+  async function unlockToken(pass) {
+    const o = JSON.parse(localStorage.getItem(STORE));
+    const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(o.iv) }, await keyFrom(pass, unb64(o.salt)), unb64(o.ct));
+    return dec.decode(pt);
+  }
+
+  /* ---- GitHub ---- */
+  const gh = (url, opts = {}) => fetch(url, { ...opts, headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}`, ...(opts.headers || {}) } });
+  const fromB64 = s => dec.decode(unb64(s.replace(/\n/g, '')));
+  const toB64 = str => { const bytes = enc.encode(str); let bin = ''; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000)); return btoa(bin); };
+  async function loadPage() {
+    const r = await gh(`${API}?ref=${BRANCH}`);
+    if (r.status === 401) throw new Error('Ключът не е валиден или е изтекъл.');
+    if (!r.ok) throw new Error(`GitHub отговори с ${r.status}.`);
+    const j = await r.json(); sha = j.sha; raw = fromB64(j.content);
+  }
+
+  /* ---- the editor: the page without its scripts, every text block editable ---- */
+  function showEditor() {
+    const doc = new DOMParser().parseFromString(raw, 'text/html');
+    doc.querySelectorAll('script, link[rel="modulepreload"]').forEach(n => n.remove());
+    const base = doc.createElement('base'); base.href = new URL('../', location.href).href; doc.head.prepend(base);
+    const st = doc.createElement('style');
+    st.textContent = `[data-eid]{outline:1px dashed rgba(91,79,75,.35);outline-offset:3px;border-radius:2px;cursor:text}
+      [data-eid]:hover{outline-color:#5b4f4b}[data-eid]:focus{outline:2px solid #5b4f4b;background:rgba(255,236,170,.35)}
+      .nav{position:absolute!important} a{pointer-events:auto}`;
+    doc.head.append(st);
+    doc.querySelectorAll(EDITABLE).forEach((el, i) => { el.dataset.eid = i; el.setAttribute('contenteditable', 'true'); el.setAttribute('spellcheck', 'true'); });
+    const f = $('frame');
+    f.srcdoc = '<!doctype html>' + doc.documentElement.outerHTML;
+    f.onload = () => {
+      const d = f.contentDocument;
+      d.addEventListener('click', e => { if (e.target.closest('a') && !e.target.closest('[data-eid]')) e.preventDefault(); if (e.target.closest('[data-eid] a')) e.preventDefault(); }, true);
+      d.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.closest('[data-eid]')) e.preventDefault(); });
+      d.addEventListener('paste', e => { if (!e.target.closest('[data-eid]')) return; e.preventDefault(); d.execCommand('insertText', false, (e.clipboardData.getData('text/plain') || '').replace(/\s+/g, ' ')); });
+      d.addEventListener('input', () => { dirty = true; status('Има промени, които не са запазени.'); });
+    };
+    show('editor');
+  }
+
+  /* only text and the page's own inline marks survive an edit */
+  function clean(el) {
+    const t = el.cloneNode(true);
+    t.querySelectorAll('*').forEach(n => { if (!KEEP.has(n.tagName) && !n.closest('svg')) n.replaceWith(...n.childNodes); });
+    t.querySelectorAll('[style]').forEach(n => n.removeAttribute('style'));
+    return t.innerHTML.replace(/&nbsp;/g, ' ').trim();
+  }
+
+  async function save() {
+    const d = $('frame').contentDocument, fresh = new DOMParser().parseFromString(raw, 'text/html');
+    const targets = [...fresh.querySelectorAll(EDITABLE)];
+    let n = 0;
+    d.querySelectorAll('[data-eid]').forEach(el => {
+      const t = targets[+el.dataset.eid]; if (!t) return;
+      const html = clean(el);
+      if (html !== t.innerHTML.trim()) { t.innerHTML = html; n++; }
+    });
+    if (!n) { status('Няма промени за запазване.'); return; }
+    const out = '<!doctype html>\n' + fresh.documentElement.outerHTML + '\n';
+    status('Запазване…');
+    const r = await gh(API, { method: 'PUT', body: JSON.stringify({ message: `Редакция на текста от /edit (${n})`, content: toB64(out), sha, branch: BRANCH }) });
+    if (r.status === 409) { status('Страницата е променена междувременно. Натиснете „Отказ“ и опитайте пак.', true); return; }
+    if (!r.ok) { status(`Не се запази: GitHub отговори с ${r.status}.`, true); return; }
+    const j = await r.json(); sha = j.content.sha; raw = out; dirty = false;
+    status(`Запазено (${n}). Сайтът се обновява до около минута.`, false, true);
+  }
+
+  /* ---- screens ---- */
+  function show(id) { ['setup', 'unlock', 'editor'].forEach(s => $(s).hidden = s !== id); const i = $(id).querySelector('input'); if (i) i.focus(); }
+  function status(t, err, ok) { const s = $('status'); s.textContent = t; s.style.color = err ? '#ffb4ab' : ok ? '#b8f0c0' : ''; }
+  const say = (id, t, cls) => { const m = $(id); m.textContent = t; m.className = 'msg ' + (cls || ''); };
+
+  $('setup-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const tok = $('s-token').value.trim(), p1 = $('s-pass').value, p2 = $('s-pass2').value;
+    if (p1 !== p2) return say('setup-msg', 'Паролите не съвпадат.', 'err');
+    say('setup-msg', 'Проверка на ключа…');
+    token = tok;
+    try { await loadPage(); await lockToken(tok, p1); $('s-token').value = $('s-pass').value = $('s-pass2').value = ''; showEditor(); }
+    catch (err) { token = null; say('setup-msg', err.message, 'err'); }
+  });
+  $('unlock-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    say('unlock-msg', 'Отключване…');
+    try { token = await unlockToken($('u-pass').value); } catch { return say('unlock-msg', 'Грешна парола.', 'err'); }
+    $('u-pass').value = '';
+    try { await loadPage(); showEditor(); } catch (err) { say('unlock-msg', err.message, 'err'); }
+  });
+  $('reset').addEventListener('click', () => { if (confirm('Да се изтрие ли запазеният ключ от този компютър?')) { localStorage.removeItem(STORE); show('setup'); } });
+  $('save').addEventListener('click', () => save().catch(err => status('Не се запази: ' + err.message, true)));
+  $('discard').addEventListener('click', async () => { if (dirty && !confirm('Да се отменят ли незапазените промени?')) return; await loadPage(); dirty = false; showEditor(); status('Щракнете върху текст, за да го промените.'); });
+  $('lock').addEventListener('click', () => { if (dirty && !confirm('Има незапазени промени. Да се заключи ли?')) return; token = null; raw = null; dirty = false; $('frame').srcdoc = ''; show('unlock'); });
+  addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+  show(localStorage.getItem(STORE) ? 'unlock' : 'setup');
+})();
+</script>
+</body>
+</html>
